@@ -1,5 +1,7 @@
 from models.address import Address
 from models.emergency_contact import EmergencyContact
+from enums.gender import Gender
+from enums.blood_group import BloodGroup
 
 
 address = Address(
@@ -13,9 +15,15 @@ address = Address(
 emergency_contact= EmergencyContact(
     name="Madhav",
     relationship="friend",
-    phone_number="599599"
+    phone_number="599599599"
 )
+
+gender = Gender.MALE
+
+blood_group = BloodGroup.A_POSITIVE
 
 
 print(address)
 print(emergency_contact)
+print(gender)
+print(blood_group)
