@@ -1,8 +1,8 @@
-from models.address import Address
-from models.emergency_contact import EmergencyContact
-from models.patient import Patient
-from enums.gender import Gender
-from enums.blood_group import BloodGroup
+from app.models.address import Address
+from app.models.emergency_contact import EmergencyContact
+from app.models.patient import Patient
+from app.enums.gender import Gender
+from app.enums.blood_group import BloodGroup
 
 
 address = Address(

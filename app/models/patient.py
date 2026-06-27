@@ -3,10 +3,10 @@ from datetime import date
 
 from pydantic import BaseModel, Field, EmailStr, field_validator, model_validator, computed_field
 
-from enums.gender import Gender
-from enums.blood_group import BloodGroup
-from models.address import Address
-from models.emergency_contact import EmergencyContact
+from app.enums.gender import Gender
+from app.enums.blood_group import BloodGroup
+from app.models.address import Address
+from app.models.emergency_contact import EmergencyContact
 
 
 class Patient(BaseModel):
