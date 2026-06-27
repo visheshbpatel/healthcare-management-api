@@ -1,7 +1,7 @@
 from typing import Annotated
 from datetime import date
 
-from pydantic import BaseModel, Field, EmailStr, field_validator
+from pydantic import BaseModel, Field, EmailStr, field_validator, model_validator, computed_field
 
 from enums.gender import Gender
 from enums.blood_group import BloodGroup
@@ -31,6 +31,40 @@ class Patient(BaseModel):
         return value.strip()
     
 
+    @model_validator(mode="after")
+    def validate_date_of_birth(self):
+
+        if self.date_of_birth > date.today():
+            raise ValueError("Date of birth can't be in future")
+        
+        return self
+    
+
+    @computed_field
+    @property
+    def bmi(self)->float:
+
+        height = self.height_cm/100
+        bmi = round(self.weight_kg/((height)**2),2)
+        return bmi
+    
+
+    @computed_field
+    @property
+    def age(self)->int:
+
+        today = date.today()
+
+        age = today.year - self.date_of_birth.year
+
+        if  (today.month, today.day) < (
+            self.date_of_birth.month, self.date_of_birth.day
+            ):
+            age-=1
+
+        return age
+    
+
     first_name:Annotated[str,Field(min_length=3, max_length=20, description="user's first name")]
     last_name:Annotated[str,Field(min_length=3, max_length=20, description="user's last name")]
     date_of_birth:date
@@ -43,3 +77,5 @@ class Patient(BaseModel):
     occupation:Annotated[str|None,Field(min_length=3, max_length=20, default=None)]
     address:Address
     emergency_contact:EmergencyContact
+
+

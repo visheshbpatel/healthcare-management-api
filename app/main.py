@@ -36,3 +36,5 @@ patient = Patient(
 
 
 print(patient)
+print(patient.age)
+print(patient.bmi)
