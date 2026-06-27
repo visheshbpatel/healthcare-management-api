@@ -1,7 +1,7 @@
 from typing import Annotated
 from datetime import date
 
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, field_validator
 
 from enums.gender import Gender
 from enums.blood_group import BloodGroup
@@ -9,8 +9,27 @@ from models.address import Address
 from models.emergency_contact import EmergencyContact
 
 
-
 class Patient(BaseModel):
+
+    @field_validator("first_name")
+    @classmethod
+    def validate_first_name(cls, value:str):
+
+        if value.strip() == "":
+            raise ValueError("first name can not be empty")
+
+        return value.strip()
+
+
+    @field_validator("last_name")
+    @classmethod
+    def validate_last_name(cls, value:str):
+
+        if value.strip() == "":
+            raise ValueError("last name can not be empty")
+
+        return value.strip()
+    
 
     first_name:Annotated[str,Field(min_length=3, max_length=20, description="user's first name")]
     last_name:Annotated[str,Field(min_length=3, max_length=20, description="user's last name")]
